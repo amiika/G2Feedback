@@ -1,0 +1,10 @@
+<div id="custom-tweet-button">
+  <a ng-href="https://twitter.com/intent/tweet?hashtags={{hash}}" target="_blank">Send some tweetback</a>
+</div>
+
+<div>
+<h3 ng-show="data.data">Tweets</h3>
+<ul ng:repeat='result in data.data.results'>
+<li>{{result.text}}</li>
+</ul>
+</div>

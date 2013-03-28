@@ -1,21 +1,4 @@
-
-app.service('SparqlService', function($http, $q) {
-        this.query = function(query){
-            var deferred = $q.defer();
-              $http({
-                method: 'GET',
-                headers: { 'Accept' : 'application/sparql-results+json' },
-                url: 'http://data.aalto.fi/sparql',
-                params: {query: query}
-            }).success(function(data, status) {
-                deferred.resolve(data);
-            }).error(function(data, status) {
-                deferred.reject(data);
-            });
-            return deferred.promise;
-        }
-    }
-);
+var app = angular.module('myApp', []);
 
 app.service('TwitterService', function($http, $q) {
         this.search = function(id){
@@ -30,5 +13,4 @@ app.service('TwitterService', function($http, $q) {
             });
             return deferred.promise;
         }
-    }
-);
+    });
