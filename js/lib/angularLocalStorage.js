@@ -1,4 +1,6 @@
-/* Start angularLocalStorage */
+/* Start angularLocalStorage 
+https://github.com/grevory/angular-local-storage
+*/
 
 var angularLocalStorage = angular.module('LocalStorageModule', []);
 

@@ -33,14 +33,14 @@ function LectureListControl($scope,$routeParams,$location,SparqlService) {
 
 function LectureControl($scope,$routeParams,$location,TwitterService) {
     $scope.params = $routeParams;
-    $scope.data = null;
+    $scope.tweets = null;
     $scope.status = "Loading tweets ...";
     $scope.hash = encodeURIComponent($scope.params.id);
     
  $scope.getTweets = function() {
      TwitterService.search($scope.params.id).then(function(data) {
          console.log(data);
-         $scope.data = data;
+         $scope.tweets = data;
      });   
     }
     
@@ -57,5 +57,3 @@ function Tweet($scope,TwitterService){
      });   
 }
 }
-
-//Tweet.myController.$inject = ['$scope','TwitterService'];
