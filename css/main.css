@@ -1,9 +1,29 @@
 /* Main css */
         
-      
-  #custom-tweet-button a {
-    display: block;
-    padding: 2px 5px 2px 20px;
-    background: url('https://twitter.com/favicons/favicon.ico') 1px center no-repeat;
-  }
-  
+/* Top Padding for responsive navbar-top-fixed */
+body { 
+		padding-top: 60px;
+		padding-bottom: 40px;
+}
+@media (max-width: 979px) {
+	body { 
+			padding-top: 0;
+		 }
+}
+
+#custom-tweet-button a {
+  display: block;
+  padding: 2px 5px 2px 20px;
+  background: url('https://twitter.com/favicons/favicon.ico') 1px center no-repeat;
+}
+
+.span12 {
+	margin:0;
+}
+
+li {
+	display:inline-block;
+}
+ul {
+	margin:0;
+}

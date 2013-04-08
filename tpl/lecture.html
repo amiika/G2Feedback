@@ -3,8 +3,8 @@
 </div>
 
 <div>
-<h3 ng-show="tweets.data">Tweets</h3>
-<ul ng-repeat='result in tweets.data.results'>
-<li>{{result.text}}</li>
-</ul>
+	<h3 ng-show="tweets.data">Tweets</h3>
+	<ul>
+		<li ng-repeat='result in tweets.data.results'>{{result.text}}</li>
+	</ul>
 </div>

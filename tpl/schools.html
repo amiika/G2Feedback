@@ -1,6 +1,8 @@
-<h1>Select school</h1>
-<div>
-    <ul ng-repeat="binding in schools.results.bindings">
-        <li><a href="#/lectures?id={{binding.org.value}}">{{binding.name.value}}</a></li>
+<h1 class="offset1 span6">Select school</h1>
+<div class="span12">
+    <ul>
+        <li ng-repeat="binding in schools.results.bindings" class="span12">
+        	<a href="#/lectures?id={{binding.org.value}}" class="span12 btn">{{binding.name.value}}</a>
+        </li>
     </ul>
 </div>
