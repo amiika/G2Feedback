@@ -4,7 +4,7 @@
 
 <div>
 	<h3 ng-show="tweets.data">Tweets</h3>
-	<ul>
+	<ul id="tweetlist">
 		<li ng-repeat='result in tweets.data.results'>{{result.text}}</li>
 	</ul>
 </div>
