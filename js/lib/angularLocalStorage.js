@@ -10,7 +10,7 @@ angularLocalStorage.constant('prefix', 'ls');
 // Cookie options (usually in case of fallback)
 // expiry = Number of days before cookies expire // 0 = Does not expire
 // path = The web path the cookie represents
-angularLocalStorage.constant('cookie', { expiry:30, path: '/'});
+angularLocalStorage.constant('cookie', { expiry:0, path: '/'});
 
 angularLocalStorage.service('localStorageService', [
   '$rootScope', 

@@ -1,5 +1,6 @@
 // Angularjs SparqlService testing
 
+// Main constructor. Place to include modules and routes.
 var app = angular.module('myApp', ['filters','services'], function($routeProvider, $locationProvider) {
 
 $routeProvider.when('/main', {
@@ -26,6 +27,7 @@ $routeProvider.otherwise({redirectTo:'/main'});
 
 });
 
+// CORS fix
 app.config(['$httpProvider', function($httpProvider) {
     delete $httpProvider.defaults.headers.common["X-Requested-With"]
 }]);

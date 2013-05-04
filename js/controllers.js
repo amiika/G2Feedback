@@ -1,16 +1,19 @@
 var prefix = "prefix teach:<http://linkedscience.org/teach/ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix aiiso:<http://purl.org/vocab/aiiso/schema#> prefix ical: <http://www.w3.org/2002/12/cal/icaltzd#> prefix xsd: <http://www.w3.org/2001/XMLSchema#>";
 
+/* Control for main page */
 function MainControl($scope, $routeParams) {
   $scope.name = "MainControl";
   $scope.params = $routeParams;
 }
 
+/* Control for Schools-page */
 function SchoolControl($scope,SparqlService) {
     $scope.schools = null;
       SparqlService.query(prefix+"SELECT ?org ?name WHERE { ?d aiiso:part_of ?org . ?org foaf:name ?name . FILTER(lang(?name)='en') ?d aiiso:teaches ?c . ?c teach:arrangedAt ?l . } GROUP BY ?org ?name ORDER BY desc(?name)")
        .success(function(data, status) {$scope.schools = data});
 }
 
+/* Control for LectureList-page */
 function LectureListControl($scope,$routeParams,$location,SparqlService) {
     $scope.params = $routeParams;
     $scope.lectures = null;
@@ -31,23 +34,27 @@ function LectureListControl($scope,$routeParams,$location,SparqlService) {
         });
 }
 
+/* Control for Tweet-page */
 function LectureControl($scope,$routeParams,$location,TwitterService) {
     $scope.params = $routeParams;
     $scope.tweets = null;
     $scope.status = "Loading tweets ...";
     $scope.hash = encodeURIComponent($scope.params.id);
-    
+
+// Uses TwitterService to get tweets from twitter
  $scope.getTweets = function() {
      TwitterService.search($scope.params.id).then(function(data) {
          console.log(data);
          $scope.tweets = data;
      });   
     }
-    
+
+// Get tweets always when page and this controller is loaded.
   $scope.getTweets();
 
 }
 
+// This is old test. SHOULD BE REMOVED?
 function Tweet($scope,TwitterService){
  $scope.id = null;
  $scope.data = null;

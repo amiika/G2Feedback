@@ -1,5 +1,6 @@
 !(function() {
-    
+
+// FILTERS
 var filters = angular.module('filters', []);
     
 filters.filter('urlFilter', function () {
@@ -8,8 +9,10 @@ filters.filter('urlFilter', function () {
     };
 });
 
+// SERVICES
 var services = angular.module('services', []);
 
+// SPARQL-Service
 services.factory('SparqlService', function($http) {    
     var sparqlService = {
         query: function(query){
@@ -23,6 +26,7 @@ services.factory('SparqlService', function($http) {
     return sparqlService;
 });
 
+// TWITTER-Service
 services.factory('TwitterService', function($http) {    
     var twitterService = {
         search: function(id){
