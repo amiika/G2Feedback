@@ -1,6 +1,11 @@
 <div class="span12">
 	<ul>
 		<li class="span12"><a href="#/schools" class="btn span12">Find lectures</a></li>
-		<li class="span12"><a href="#/course" class="btn span12">Find courses</a></li>
+		<li class="span12 btn disabled">
+			 <form class="">
+		        <input type="text" ng-model="keywords" class="search-query" placeholder="Keywords...">
+		        <a href="#/courses" class="btn ">Search for courses</a>  
+		    </form>
+		</li>
 	</ul>
 </div>

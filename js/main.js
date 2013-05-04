@@ -22,6 +22,11 @@ $routeProvider.when('/lecture', {
     templateUrl: 'tpl/lecture.html',
     controller: 'LectureControl'
 });
+
+$routeProvider.when('/courses', {
+    templateUrl: 'tpl/courses.html',
+    controller: 'CourseListControl'
+});
   
 $routeProvider.otherwise({redirectTo:'/main'});
 

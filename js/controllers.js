@@ -41,6 +41,52 @@ function LectureControl($scope,$routeParams,$location,TwitterService) {
     $scope.status = "Loading tweets ...";
     $scope.hash = encodeURIComponent($scope.params.id);
 
+	//TODO: SPARQL that gets Lecture&course data? for more information about the lecture.
+
+// Uses TwitterService to get tweets from twitter
+ $scope.getTweets = function() {
+     TwitterService.search($scope.params.id).then(function(data) {
+         console.log(data);
+         $scope.tweets = data;
+     });   
+    }
+
+// Get tweets always when page and this controller is loaded.
+  $scope.getTweets();
+
+}
+
+/* Control for course search results page */
+function CourseListControl($scope,$routeParams,$location,SparqlService) {
+    $scope.params = $routeParams;
+    $scope.courses = null;
+    $scope.status = "Loading search results ...";   
+    console.log($scope.params);
+    
+    //TODO: Find the right SPARQL
+    /*SparqlService.query(prefix+"SELECT ?title ?l ?s ?e ?sum WHERE { ?d aiiso:part_of <"+$scope.params.id+"> . ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER(lang(?title)='en') ?c teach:arrangedAt ?l . ?l ical:dtstart ?s . ?l ical:dtend ?e . ?l ical:summary ?sum . BIND(xsd:int(substr(str(now()),12,2)) as ?now) BIND((xsd:int(substr(str(?e),12,2))) as ?enow) BIND(substr(str(now()),1,10) as ?today) BIND(substr(str(?s),1,10) as ?lday) FILTER(?today=?lday)} ORDER BY ?enow")
+       .success(function(data, status) {
+           
+        if(data.results.bindings.length<1) {
+            $scope.status="No courses found.";
+        }
+        else { 
+            $scope.status="Select course:";
+            $scope.courses = data
+        }
+           
+        });*/
+}
+
+/* Control for the course general page with the Tweet-stuff */
+function CourseControl($scope,$routeParams,$location,TwitterService) {
+    $scope.params = $routeParams;
+    $scope.tweets = null;
+    $scope.status = "Loading tweets ...";
+    $scope.hash = encodeURIComponent($scope.params.id);
+    
+    //TODO: SPARQL that gets Course data? for more information about the course.
+
 // Uses TwitterService to get tweets from twitter
  $scope.getTweets = function() {
      TwitterService.search($scope.params.id).then(function(data) {
