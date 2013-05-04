@@ -4,6 +4,12 @@ var prefix = "prefix teach:<http://linkedscience.org/teach/ns#> prefix foaf: <ht
 function MainControl($scope, $routeParams) {
   $scope.name = "MainControl";
   $scope.params = $routeParams;
+  
+  //the search box redirection (wierd bug workaround)
+  $scope.search = function() {
+  	//console.log($scope.keywords);
+  	window.location = "#/courses?keywords="+$scope.keywords;
+  }
 }
 
 /* Control for Schools-page */
@@ -28,7 +34,7 @@ function LectureListControl($scope,$routeParams,$location,SparqlService) {
         }
         else { 
             $scope.status="Select lecture";
-            $scope.lectures = data
+            $scope.lectures = data;
         }
            
         });
@@ -63,8 +69,11 @@ function CourseListControl($scope,$routeParams,$location,SparqlService) {
     $scope.status = "Loading search results ...";   
     console.log($scope.params);
     
-    //TODO: Find the right SPARQL
-    /*SparqlService.query(prefix+"SELECT ?title ?l ?s ?e ?sum WHERE { ?d aiiso:part_of <"+$scope.params.id+"> . ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER(lang(?title)='en') ?c teach:arrangedAt ?l . ?l ical:dtstart ?s . ?l ical:dtend ?e . ?l ical:summary ?sum . BIND(xsd:int(substr(str(now()),12,2)) as ?now) BIND((xsd:int(substr(str(?e),12,2))) as ?enow) BIND(substr(str(now()),1,10) as ?today) BIND(substr(str(?s),1,10) as ?lday) FILTER(?today=?lday)} ORDER BY ?enow")
+    
+    console.log("SELECT ?title ?l ?c ?d WHERE { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER regex(?title ,'"+$scope.params.keywords+"','i') } ORDER BY ?c");
+    //Finds the course by its name.
+    //TODO: Find a course by its code.
+    SparqlService.query(prefix+"SELECT ?title ?l ?c ?d WHERE { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER regex(?title ,'"+$scope.params.keywords+"','i') } ORDER BY ?c")
        .success(function(data, status) {
            
         if(data.results.bindings.length<1) {
@@ -72,10 +81,11 @@ function CourseListControl($scope,$routeParams,$location,SparqlService) {
         }
         else { 
             $scope.status="Select course:";
-            $scope.courses = data
+            $scope.courses = data;
+            console.log(data);
         }
            
-        });*/
+        });
 }
 
 /* Control for the course general page with the Tweet-stuff */
