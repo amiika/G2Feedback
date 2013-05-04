@@ -2,10 +2,15 @@
 
 // FILTERS
 var filters = angular.module('filters', []);
-    
+   
+//filtering the twitter hashtag
 filters.filter('urlFilter', function () {
     return function (url, after) {
-         return url.substr(url.lastIndexOf(after)+1);
+         //get the last part (lecture number or course code)
+         var temp = url.substr(url.lastIndexOf(after)+1)
+         //filter punctuation out of it.
+         temp = temp.replace(".","");
+         return temp.replace("-","");
     };
 });
 
@@ -30,8 +35,8 @@ services.factory('SparqlService', function($http) {
 services.factory('TwitterService', function($http) {    
     var twitterService = {
         search: function(id){
-              return $http.jsonp('http://search.twitter.com/search.json?callback=JSON_CALLBACK',
-              {params: {q: id}
+              return $http.jsonp('http://search.twitter.com/search.json?callback=JSON_CALLBACK',  //include_entities=true could be used if needed
+              {params: {q: "#"+id}
             })}
     }
     return twitterService;

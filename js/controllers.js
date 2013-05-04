@@ -99,6 +99,7 @@ function CourseControl($scope,$routeParams,$location,TwitterService) {
 
 // Uses TwitterService to get tweets from twitter
  $scope.getTweets = function() {
+     console.log($scope.params.id);
      TwitterService.search($scope.params.id).then(function(data) {
          console.log(data);
          $scope.tweets = data;
