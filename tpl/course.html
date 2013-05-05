@@ -1,3 +1,9 @@
+<div ng-show="noppa">
+	{{noppa.data.course_id}} {{noppa.data.name}}
+	<a href="http://noppa.aalto.fi/noppa/kurssi/{{params.id}}" target="_blank">Go to Noppa Page</a>
+	<div>Latest News from Noppa: {{noppaNews.data[0].date}} {{noppaNews.data[0].title}} {{noppaNews.data[0].content}}</div>
+</div>
+
 <div id="custom-tweet-button">
   <a ng-href="https://twitter.com/intent/tweet?hashtags={{hash}}" target="_blank">Send some tweetback for this course.</a>
 </div>
@@ -5,6 +11,6 @@
 <div>
 	<h3 ng-show="tweets.data">Tweets</h3>
 	<ul id="tweetlist">
-		<li ng-repeat='result in tweets.data.results'>{{result.text}}</li>
+		<li ng-repeat='result in tweets.data.results'>{{result.created_at}} {{result.text}} {{result.from_user_name}} <img src="{{result.profile_image_url}}" ></li>
 	</ul>
 </div>
