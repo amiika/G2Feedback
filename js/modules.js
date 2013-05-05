@@ -3,14 +3,10 @@
 // FILTERS
 var filters = angular.module('filters', []);
    
-//filtering the twitter hashtag
 filters.filter('urlFilter', function () {
     return function (url, after) {
          //get the last part (lecture number or course code)
-         var temp = url.substr(url.lastIndexOf(after)+1)
-         //filter punctuation out of it.
-         temp = temp.replace(".","");
-         return temp.replace("-","");
+         return url.substr(url.lastIndexOf(after)+1);
     };
 });
 
@@ -40,6 +36,25 @@ services.factory('TwitterService', function($http) {
             })}
     }
     return twitterService;
+}); 
+
+// Noppa-service
+services.factory('NoppaService', function($http) {    
+    var noppaService = {
+        searchCourse: function(id){
+              return $http.jsonp('http://noppa-api-dev.aalto.fi/api/v1/courses/'+id+'?key=cdda4ae4833c0114005de5b5c4371bb8&callback=JSON_CALLBACK',
+              {params: {}
+            })},
+        searchCourseOverview: function(id){
+           	  return $http.jsonp('http://noppa-api-dev.aalto.fi/api/v1/courses/'+id+'/overview?key=cdda4ae4833c0114005de5b5c4371bb8&callback=JSON_CALLBACK',
+              {params: {}
+            })},
+        searchCourseNews: function(id){
+           	  return $http.jsonp('http://noppa-api-dev.aalto.fi/api/v1/courses/'+id+'/news?key=cdda4ae4833c0114005de5b5c4371bb8&callback=JSON_CALLBACK',
+              {params: {}
+            })}
+    }
+    return noppaService;
 }); 
 
 }).call(this);

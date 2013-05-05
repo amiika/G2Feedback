@@ -93,22 +93,33 @@ function CourseControl($scope,$routeParams,$location,TwitterService) {
     $scope.params = $routeParams;
     $scope.tweets = null;
     $scope.status = "Loading tweets ...";
-    $scope.hash = encodeURIComponent($scope.params.id);
     
-    //TODO: SPARQL that gets Course data? for more information about the course.
 
-// Uses TwitterService to get tweets from twitter
- $scope.getTweets = function() {
-     console.log($scope.params.id);
-     TwitterService.search($scope.params.id).then(function(data) {
-         console.log(data);
-         $scope.tweets = data;
-     });   
+	// Uses TwitterService to get tweets from twitter
+ 	//filter punctuation out of it.
+ 	console.log($scope.params.id);
+    var temp = $scope.params.id;
+    temp = temp.replace(".","");
+    temp = temp.replace("-","");
+    $scope.hash = encodeURIComponent("Aalto"+temp);
+ 	$scope.getTweets = function() {
+     	console.log($scope.hash);
+     	TwitterService.search($scope.hash).then(function(data) {
+         	console.log(data);
+         	$scope.tweets = data;
+     	});   
     }
 
-// Get tweets always when page and this controller is loaded.
-  $scope.getTweets();
-
+	// Get tweets always when page and this controller is loaded.
+  	$scope.getTweets();
+  
+  
+  	//call noppa for information
+  	$scope.noppa = null;
+  	/*NoppaService.searchCourse($scope.params.id).then(function(data) {
+         	console.log(data);
+         	$scope.noppa = data;
+    }); */
 }
 
 // This is old test. SHOULD BE REMOVED?

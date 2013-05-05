@@ -2,7 +2,7 @@
 <div class="span12">
 	<ul>
 		<li ng-repeat="binding in courses.results.bindings" class="span12">
-			<a ng-href="#/course?id=Aalto{{binding.c.value | urlFilter:'_'}}" title='{{binding.title.value}}' class="btn span12">
+			<a ng-href="#/course?id={{binding.c.value | urlFilter:'_'}}" title='{{binding.title.value}}' class="btn span12">
 				{{binding.title.value}}
 			</a>
 		</li>    
