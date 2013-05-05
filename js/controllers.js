@@ -1,4 +1,4 @@
-var prefix = "prefix teach:<http://linkedscience.org/teach/ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix aiiso:<http://purl.org/vocab/aiiso/schema#> prefix ical: <http://www.w3.org/2002/12/cal/icaltzd#> prefix xsd: <http://www.w3.org/2001/XMLSchema#>";
+var prefix = "prefix teach:<http://linkedscience.org/teach/ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix aiiso:<http://purl.org/vocab/aiiso/schema#> prefix ical: <http://www.w3.org/2002/12/cal/icaltzd#> prefix xsd: <http://www.w3.org/2001/XMLSchema#> prefix fn:  <http://www.w3.org/2005/xpath-functions#>";
 
 /* Control for main page */
 function MainControl($scope, $routeParams) {
@@ -73,7 +73,7 @@ function CourseListControl($scope,$routeParams,$location,SparqlService) {
     console.log("SELECT ?title ?l ?c ?d WHERE { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER regex(?title ,'"+$scope.params.keywords+"','i') } ORDER BY ?c");
     //Finds the course by its name.
     //TODO: Find a course by its code.
-    SparqlService.query(prefix+"SELECT ?title ?l ?c ?d WHERE { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER regex(?title ,'"+$scope.params.keywords+"','i') } ORDER BY ?c")
+    SparqlService.query(prefix+"SELECT ?title ?l ?c ?d WHERE { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER regex(?title ,'"+$scope.params.keywords+"','i') } ORDER BY fn:lower-case(?title)")
        .success(function(data, status) {
            
         if(data.results.bindings.length<1) {
