@@ -16,12 +16,12 @@
 		<ul id="tweetlist">
 			<li ng-repeat='result in tweets.data.results'>
 				<div class="twitter-text">{{result.from_user_name}}: {{result.text}}</div>
-				<em class="twitter-text-small">
+				<div class="twitter-text-small">
 					<a target="_blank" class="" href="https://twitter.com/{{result.from_user}}/status/{{result.id_str}}">{{result.created_at}}</a>
 					<a target="_blank" class="" href="https://twitter.com/intent/tweet?in_reply_to={{result.id}}">reply</a>
 					<a target="_blank" class="" href="https://twitter.com/intent/retweet?tweet_id={{result.id}}">retweet</a>
 					<a target="_blank" class="" href="https://twitter.com/intent/favorite?tweet_id={{result.id}}">favorite</a>
-				</em>
+				</div>
 			</li>
 		</ul>
 	</div>
