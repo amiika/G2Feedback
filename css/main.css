@@ -12,22 +12,22 @@ body {
 }
 
 @media (min-width: 520px) and (max-width:739px) {
-	.contentwrapper {
+	.course-wrapper {
 		margin-left:10%;
 	}
 }
 @media (min-width: 740px) and (max-width:979px) {
-	.contentwrapper {
+	.course-wrapper {
 		margin-left:20%;
 	}
 }
 @media (min-width: 980px) {
-	.contentwrapper {
+	.course-wrapper {
 		margin-left:30%;
 	}
 }
 
-.contentwrapper {
+.course-wrapper {
 	max-width:480px;
 }
 
