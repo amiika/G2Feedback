@@ -89,7 +89,7 @@ function CourseListControl($scope,$routeParams,$location,SparqlService) {
 }
 
 /* Control for the course general page with the Tweet-stuff */
-function CourseControl($scope,$routeParams,$location,TwitterService) {
+function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService) {
     $scope.params = $routeParams;
     $scope.tweets = null;
     $scope.status = "Loading tweets ...";
@@ -116,10 +116,10 @@ function CourseControl($scope,$routeParams,$location,TwitterService) {
   
   	//call noppa for information
   	$scope.noppa = null;
-  	/*NoppaService.searchCourse($scope.params.id).then(function(data) {
+  	NoppaService.searchCourse($scope.params.id).then(function(data) {
          	console.log(data);
          	$scope.noppa = data;
-    }); */
+    }); 
 }
 
 // This is old test. SHOULD BE REMOVED?

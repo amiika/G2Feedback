@@ -29,6 +29,7 @@ services.factory('SparqlService', function($http) {
 
 // TWITTER-Service
 services.factory('TwitterService', function($http) {    
+    console.log("Going into TwitterService");
     var twitterService = {
         search: function(id){
               return $http.jsonp('http://search.twitter.com/search.json?callback=JSON_CALLBACK',  //include_entities=true could be used if needed
@@ -40,20 +41,19 @@ services.factory('TwitterService', function($http) {
 
 // Noppa-service
 services.factory('NoppaService', function($http) {    
+    console.log("Going into NoppaService");
     var noppaService = {
         searchCourse: function(id){
-              return $http.jsonp('http://noppa-api-dev.aalto.fi/api/v1/courses/'+id+'?key=cdda4ae4833c0114005de5b5c4371bb8&callback=JSON_CALLBACK',
-              {params: {}
-            })},
+              return $http.jsonp('http://noppa-api-dev.aalto.fi/api/v1/courses/'+id+'?key=cdda4ae4833c0114005de5b5c4371bb8&callback=JSON_CALLBACK')
+              },
         searchCourseOverview: function(id){
-           	  return $http.jsonp('http://noppa-api-dev.aalto.fi/api/v1/courses/'+id+'/overview?key=cdda4ae4833c0114005de5b5c4371bb8&callback=JSON_CALLBACK',
-              {params: {}
-            })},
+           	  return $http.jsonp('http://noppa-api-dev.aalto.fi/api/v1/courses/'+id+'/overview?key=cdda4ae4833c0114005de5b5c4371bb8&callback=JSON_CALLBACK')
+           	  },
         searchCourseNews: function(id){
-           	  return $http.jsonp('http://noppa-api-dev.aalto.fi/api/v1/courses/'+id+'/news?key=cdda4ae4833c0114005de5b5c4371bb8&callback=JSON_CALLBACK',
-              {params: {}
-            })}
-    }
+           	  return $http.jsonp('http://noppa-api-dev.aalto.fi/api/v1/courses/'+id+'/news?key=cdda4ae4833c0114005de5b5c4371bb8&callback=JSON_CALLBACK')
+           	  }
+    };
+    
     return noppaService;
 }); 
 
