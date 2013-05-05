@@ -116,10 +116,20 @@ function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService
   
   	//call noppa for information
   	$scope.noppa = null;
+  	$scope.noppaExtra = null;
+  	$scope.noppaNews = null;
   	NoppaService.searchCourse($scope.params.id).then(function(data) {
          	console.log(data);
          	$scope.noppa = data;
     }); 
+    NoppaService.searchCourseOverview($scope.params.id).then(function(data) {
+         	console.log(data);
+         	$scope.noppaExtra = data;
+    });
+    NoppaService.searchCourseNews($scope.params.id).then(function(data) {
+         	console.log(data);
+         	$scope.noppaNews = data;
+    });  
 }
 
 // This is old test. SHOULD BE REMOVED?
