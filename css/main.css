@@ -11,6 +11,26 @@ body {
 		 }
 }
 
+@media (min-width: 520px) and (max-width:739px) {
+	.contentwrapper {
+		margin-left:10%;
+	}
+}
+@media (min-width: 740px) and (max-width:979px) {
+	.contentwrapper {
+		margin-left:20%;
+	}
+}
+@media (min-width: 980px) {
+	.contentwrapper {
+		margin-left:30%;
+	}
+}
+
+.contentwrapper {
+	max-width:480px;
+}
+
 #custom-tweet-button a {
   display: block;
   padding: 2px 5px 2px 20px;
@@ -45,4 +65,14 @@ ul {
 
 #tweetlist li:not(:first-child){
   border-top:1px solid #8888bb;
+}
+
+.twitter-title {
+	font-size: 130%;
+	font-weight: bold;
+}
+
+.coursetitle {
+	font-size: 140%;
+	font-weight: bold;
 }
