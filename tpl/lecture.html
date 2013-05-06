@@ -1,6 +1,6 @@
 <div class="course-wrapper">
 	<div ng-show="noppa" class="courseinfo">
-		<div class="coursetitle"><strong>{{noppa.data.course_id}} {{noppa.data.name}}</strong></div>
+		<div class="coursetitle"><strong>{{noppa.data.course_id}} {{noppa.data.name}} ({{noppaExtra.data.credits}} cr)</strong></div>
 		 <!-- Staff: {{noppaExtra.data.staff}} -->
 		<div><a href="#/course/?id={{params.id}}" class="courselink">Go to course page</a></div>		
 		<div><a href="http://noppa.aalto.fi/noppa/kurssi/{{params.id}}" target="_blank" class="courselink">Course in Noppa</a></div>
