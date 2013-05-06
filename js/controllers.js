@@ -152,6 +152,12 @@ function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService
     });  
 }
 
+/*Tamin lisays, starts*/
+function ShowFavoritesControl($scope){
+	//dummy part
+}
+/*Tamin lisays, ends*/
+
 // This is old test. SHOULD BE REMOVED?
 function Tweet($scope,TwitterService){
  $scope.id = null;
