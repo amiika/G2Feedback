@@ -1,4 +1,9 @@
 <div class="course-wrapper">
+	<!--Tamin lisays, starts-->
+	<div ng-hide="isFavorite(binding)" class="btn btn-info btn-small" ng-click="addFavorite( binding )">Add To Favorite</div>
+	<div ng-show="isFavorite(binding)" ng-click="removeFavorite(binding)" class="btn btn-danger btn-small">Remove Favorite</div>
+	<!--Tamin lisays, ends-->
+	
 	<div ng-show="noppa" class="courseinfo">
 		<div class="coursetitle"><strong>{{noppa.data.course_id}} {{noppa.data.name}} ({{noppaExtra.data.credits}} cr)</strong></div>
 		 <!-- Staff: {{noppaExtra.data.staff}} -->
@@ -17,7 +22,8 @@
 	<div id="custom-tweet-button">
 	  <a ng-href="https://twitter.com/intent/tweet?hashtags={{hash}}" target="_blank">Send some tweetback for this lecture.</a>
 	</div>
-
+	
+	
 	<div ng-show="tweets.data.results" class="twitter-wrapper">
 		<div class="twitter-title"ng-show="tweets.data"><strong>Tweets</strong></div>
 		<ul id="tweetlist">
