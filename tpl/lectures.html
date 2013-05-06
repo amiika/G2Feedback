@@ -1,8 +1,8 @@
-<h1 class="offset1 span6">{{status}}</h1>
-<div class="span12">
+<h1 class=" ">{{status}}</h1>
+<div class="">
 	<ul>
-		<li ng-repeat="binding in lectures.results.bindings" class="span12">
-			<a ng-href="#/lecture?id={{binding.c.value | urlFilter:'_'}}&lecture_id=A{{binding.l.value | urlFilter:'_'}}L" title='{{binding.sum.value}}' class="btn span12">
+		<li ng-repeat="binding in lectures.results.bindings" class="">
+			<a ng-href="#/lecture?id={{binding.c.value | urlFilter:'_'}}&lecture_id=A{{binding.l.value | urlFilter:'_'}}L" title='{{binding.sum.value}}' class="btn ">
 				{{binding.s.value | date:'HH:mm'}}-{{binding.e.value | date:'HH:mm'}}: <br/>
 				{{binding.title.value}}
 			</a>

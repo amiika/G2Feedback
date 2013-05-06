@@ -1,12 +1,12 @@
-<h1 class="offset1 span11">{{status}}</h1>
-<div class="span12">
+<h1 class="">{{status}}</h1>
+<div class="courselist">
 	<ul>
-		<li ng-repeat="binding in courses.results.bindings" class="span12">
-				<a ng-href="#/course?id={{binding.c.value | urlFilter:'_'}}" title='{{binding.title.value}}' class="btn span8">
+		<li ng-repeat="binding in courses.results.bindings" class="">
+				<a ng-href="#/course?id={{binding.c.value | urlFilter:'_'}}" title='{{binding.title.value}}' class="btn courselisttitle">
 					{{binding.c.value | urlFilter:'_' }}: {{binding.title.value}}
 				</a>
-				<div ng-hide="isFavorite(binding)" class="btn btn-info btn-small" ng-click="addFavorite( binding )">Add To Favorite</div>
-				<div ng-show="isFavorite(binding)" ng-click="removeFavorite(binding)" class="btn btn-danger btn-small">Remove Favorite</div>
+				<div ng-hide="isFavorite(binding)" class="btn btn-info btn-small coursefav" ng-click="addFavorite( binding )">Add To Favorite</div>
+				<div ng-show="isFavorite(binding)" ng-click="removeFavorite(binding)" class="btn btn-danger btn-small coursefav">Remove Favorite</div>
 		</li>    
 	</ul>
 </div>

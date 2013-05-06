@@ -46,7 +46,7 @@ body {
 }
 
 li {
-	display:inline-block;
+	display:block;
 }
 ul {
 	margin:0;
@@ -69,7 +69,23 @@ ul {
 .uppernav .title:hover {
 	color: #3355aa;
 }
+.btn {
+	display:block;
+}
 
+.uppernav .btn {
+	display:inline-block;
+}
+.courselist .btn {
+	display:inline-block;
+}
+.coursefav {
+	width:100px;
+	margin:5px;
+}
+.courselisttitle {
+	width:280px;
+}
 
 #tweetlist {
   padding:5px;
