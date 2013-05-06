@@ -89,7 +89,6 @@ function LectureControl($scope,$routeParams,$location,TwitterService, NoppaServi
 				$scope.noppaLectureInfo = results.data[lecture];
 			}
 		}
-	 	
 	});
  	
 

@@ -11,14 +11,14 @@
 	  <a ng-href="https://twitter.com/intent/tweet?hashtags={{hash}}" target="_blank">Send some tweetback for this course.</a>
 	</div>
 	
-	<div class="twitter-wrapper">
+	<div ng-show="tweets.data.results" class="twitter-wrapper">
 		<div class="twitter-title"ng-show="tweets.data"><strong>Tweets</strong></div>
 		<ul id="tweetlist">
 			<li ng-repeat='result in tweets.data.results'>
 				<div class="twitter-text">{{result.from_user_name}}: {{result.text}}</div>
 				<div class="twitter-text-small">
 					<a target="_blank" class="" href="https://twitter.com/{{result.from_user}}/status/{{result.id_str}}">{{result.created_at}}</a>
-					<a target="_blank" class="" href="https://twitter.com/intent/tweet?in_reply_to={{result.id}}">reply</a>
+					<a target="_blank" class="" href="https://twitter.com/intent/tweet?in_reply_to={{result.id}}&hashtags={{hash}}">reply</a>
 					<a target="_blank" class="" href="https://twitter.com/intent/retweet?tweet_id={{result.id}}">retweet</a>
 					<a target="_blank" class="" href="https://twitter.com/intent/favorite?tweet_id={{result.id}}">favorite</a>
 				</div>
