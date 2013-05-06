@@ -103,7 +103,6 @@ function CourseListControl($scope,$routeParams,$location,SparqlService) {
     console.log($scope.params);
     
     
-    console.log("SELECT ?title ?l ?c ?d WHERE { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER regex(?title ,'"+$scope.params.keywords+"','i') } ORDER BY ?c");
     //Finds the course by its name.
     //TODO: Find a course by its code.
     SparqlService.query(prefix+"SELECT ?title ?l ?c ?d WHERE { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER regex(?title ,'"+$scope.params.keywords+"','i') } ORDER BY fn:lower-case(?title)")
@@ -117,7 +116,9 @@ function CourseListControl($scope,$routeParams,$location,SparqlService) {
             $scope.courses = data;
             console.log(data);
         }
-        });
+        }).error(function(data, status) {
+	   $scope.status="Oops! Something went wrong!";
+	});
         
         /*Tamin lisays,starts*/
        	$scope.addFavorite = function(){

@@ -5,7 +5,7 @@
 		<div><a href="#/course/?id={{params.id}}" class="courselink">Go to course page</a></div>		
 		<div><a href="http://noppa.aalto.fi/noppa/kurssi/{{params.id}}" target="_blank" class="courselink">Course in Noppa</a></div>
 		<div class="lectureinfo">
-		Lecture date: {{noppaLectureInfo.date}}<br>
+		Lecture date: {{noppaLectureInfo.date | date:YYYY.MM.DD }}<br>
 		Time: {{noppaLectureInfo.start_time}} - {{noppaLectureInfo.end_time}}<br>
 		Location: {{noppaLectureInfo.location}}<br>
 		Title: {{noppaLectureInfo.title}}<br>
@@ -24,7 +24,7 @@
 			<li ng-repeat='result in tweets.data.results'>
 				<div class="twitter-text">{{result.from_user_name}}: {{result.text}}</div>
 				<div class="twitter-text-small">
-					<a target="_blank" class="" href="https://twitter.com/{{result.from_user}}/status/{{result.id_str}}">{{result.created_at}}</a>
+					<a target="_blank" class="" href="https://twitter.com/{{result.from_user}}/status/{{result.id_str}}">{{result.created_at | twitterDateFilter:' +' }}</a>
 					<a target="_blank" class="" href="https://twitter.com/intent/tweet?in_reply_to={{result.id}}&hashtags={{hash}}">reply</a>
 					<a target="_blank" class="" href="https://twitter.com/intent/retweet?tweet_id={{result.id}}">retweet</a>
 					<a target="_blank" class="" href="https://twitter.com/intent/favorite?tweet_id={{result.id}}">favorite</a>

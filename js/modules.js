@@ -9,6 +9,12 @@ filters.filter('urlFilter', function () {
          return url.substr(url.lastIndexOf(after)+1);
     };
 });
+filters.filter('twitterDateFilter', function () {
+    return function (date, after) {
+         //get the last part (lecture number or course code)
+         return date.substr(0,date.lastIndexOf(after));
+    };
+});
 
 // SERVICES
 var services = angular.module('services', []);
