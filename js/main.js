@@ -32,6 +32,13 @@ $routeProvider.when('/course', {
     templateUrl: 'tpl/course.html',
     controller: 'CourseControl'
 });
+
+/*Tamin lisay, starts*/
+$routeProvider.when('/showFavorites', {
+    templateUrl: 'tpl/showFavorites.html',
+    controller: 'ShowFavoritesControl'
+});
+/*Tamin lisay, ends*/
   
 $routeProvider.otherwise({redirectTo:'/main'});
 
