@@ -1,4 +1,4 @@
-var prefix = "prefix teach:<http://linkedscience.org/teach/ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix aiiso:<http://purl.org/vocab/aiiso/schema#> prefix ical: <http://www.w3.org/2002/12/cal/icaltzd#> prefix xsd: <http://www.w3.org/2001/XMLSchema#>";
+var prefix = "prefix teach:<http://linkedscience.org/teach/ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix aiiso:<http://purl.org/vocab/aiiso/schema#> prefix ical: <http://www.w3.org/2002/12/cal/icaltzd#> prefix xsd: <http://www.w3.org/2001/XMLSchema#> prefix fn:  <http://www.w3.org/2005/xpath-functions#>";
 
 /* Control for main page */
 function MainControl($scope, $routeParams) {
@@ -15,7 +15,7 @@ function MainControl($scope, $routeParams) {
 /* Control for Schools-page */
 function SchoolControl($scope,SparqlService) {
     $scope.schools = null;
-      SparqlService.query(prefix+"SELECT ?org ?name WHERE { ?d aiiso:part_of ?org . ?org foaf:name ?name . FILTER(lang(?name)='en') ?d aiiso:teaches ?c . ?c teach:arrangedAt ?l . } GROUP BY ?org ?name ORDER BY desc(?name)")
+      SparqlService.query(prefix+"SELECT ?org ?name WHERE { ?d aiiso:part_of ?org . ?org foaf:name ?name . FILTER(lang(?name)='en') ?d aiiso:teaches ?c . ?c teach:arrangedAt ?l . } GROUP BY ?org ?name ORDER BY asc(?name)")
        .success(function(data, status) {$scope.schools = data});
 }
 
@@ -26,7 +26,7 @@ function LectureListControl($scope,$routeParams,$location,SparqlService) {
     $scope.status = "Loading lectures ...";   
     console.log($scope.params);
     
-    SparqlService.query(prefix+"SELECT ?title ?l ?s ?e ?sum WHERE { ?d aiiso:part_of <"+$scope.params.id+"> . ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER(lang(?title)='en') ?c teach:arrangedAt ?l . ?l ical:dtstart ?s . ?l ical:dtend ?e . ?l ical:summary ?sum . BIND(xsd:int(substr(str(now()),12,2)) as ?now) BIND((xsd:int(substr(str(?e),12,2))) as ?enow) BIND(substr(str(now()),1,10) as ?today) BIND(substr(str(?s),1,10) as ?lday) FILTER(?today=?lday)} ORDER BY ?enow")
+    SparqlService.query(prefix+"SELECT ?title ?l ?s ?e ?sum WHERE { ?d aiiso:part_of <"+$scope.params.id+"> . ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER(lang(?title)='en') ?c teach:arrangedAt ?l . ?l ical:dtstart ?s . ?l ical:dtend ?e . ?l ical:summary ?sum . BIND(xsd:int(substr(str(now()),12,2)) as ?now) BIND((xsd:int(substr(str(?s),12,2))) as ?snow) BIND(substr(str(now()),1,10) as ?today) BIND(substr(str(?s),1,10) as ?lday) FILTER(?today=?lday)} ORDER BY ?snow")
        .success(function(data, status) {
            
         if(data.results.bindings.length<1) {
@@ -73,7 +73,7 @@ function CourseListControl($scope,$routeParams,$location,SparqlService) {
     console.log("SELECT ?title ?l ?c ?d WHERE { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER regex(?title ,'"+$scope.params.keywords+"','i') } ORDER BY ?c");
     //Finds the course by its name.
     //TODO: Find a course by its code.
-    SparqlService.query(prefix+"SELECT ?title ?l ?c ?d WHERE { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER regex(?title ,'"+$scope.params.keywords+"','i') } ORDER BY ?c")
+    SparqlService.query(prefix+"SELECT ?title ?l ?c ?d WHERE { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER regex(?title ,'"+$scope.params.keywords+"','i') } ORDER BY fn:lower-case(?title)")
        .success(function(data, status) {
            
         if(data.results.bindings.length<1) {
@@ -84,7 +84,6 @@ function CourseListControl($scope,$routeParams,$location,SparqlService) {
             $scope.courses = data;
             console.log(data);
         }
-           
         });
 }
 

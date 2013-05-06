@@ -61,17 +61,31 @@ ul {
 
 #tweetlist li{
   display: block;
+  padding:5px;
 }
 
 #tweetlist li:not(:first-child){
   border-top:1px solid #8888bb;
 }
 
+#tweetlist div, a {
+  padding:5px;
+}
+
 .twitter-title {
 	font-size: 130%;
 	font-weight: bold;
 }
-
+.twitter-text-small {
+	font-size: 90%;
+}
+.twitter-text-small a {
+	background-color:#b2c2df;
+	border-radius:3px;
+}
+.twitter-text-small a:hover, .twitter-text-small a:active {
+	background-color:#bfcfef;
+}
 .coursetitle {
 	font-size: 140%;
 	font-weight: bold;
