@@ -1,8 +1,4 @@
 <div class="">
-	<!--Tamin lisays, starts-->
-	<div ng-hide="isFavorite(binding)" class="btn btn-info btn-small" ng-click="addFavorite( binding )">Add To Favorite</div>
-	<div ng-show="isFavorite(binding)" ng-click="removeFavorite(binding)" class="btn btn-danger btn-small">Remove Favorite</div>
-	<!--Tamin lisays, ends-->
 	<div ng-show="noppa" class="courseinfo">
 		<div class="coursetitle"><strong>{{noppa.data.course_id}} {{noppa.data.name}} ({{noppaExtra.data.credits}} cr)</strong></div>
 		 <!-- Staff: {{noppaExtra.data.staff}} -->

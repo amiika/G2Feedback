@@ -1,4 +1,10 @@
 <div class="">
+	
+	<!--Tamin lisays, starts-->
+	<div ng-hide="isFavorite(objectHax)" class="btn btn-info btn-small" ng-click="addFavorite( objectHax )">Add To Favorite</div>
+	<div ng-show="isFavorite(objectHax)" ng-click="removeFavorite(objectHax)" class="btn btn-danger btn-small">Remove Favorite</div>
+	<!--Tamin lisays, ends-->
+	
 	<div ng-show="noppa" class="courseinfo">
 		<div class="coursetitle"><strong>{{noppa.data.course_id}} {{noppa.data.name}} ({{noppaExtra.data.credits}} cr)</strong></div>
 		<a href="http://noppa.aalto.fi/noppa/kurssi/{{params.id}}" target="_blank" class="courselink">Go to Noppa Page</a> <!-- Staff: {{noppaExtra.data.staff}} -->
@@ -6,6 +12,8 @@
 			<i>{{noppaNews.data[0].date | date:yyyy.MM.dd}} {{noppaNews.data[0].date | date:'shortTime'}}</i> <strong>{{noppaNews.data[0].title}}</strong><br>
 			{{noppaNews.data[0].content}}</div>
 	</div>
+	
+	
 	
 	<div id="custom-tweet-button">
 	  <a ng-href="https://twitter.com/intent/tweet?hashtags={{hash}}" target="_blank">Send some tweetback for this course.</a>

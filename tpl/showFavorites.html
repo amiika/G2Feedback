@@ -1,11 +1,11 @@
-<h1 class="offset1 span6">{{status}}</h1>
-<div class="span12 btn-group-vertical" ng-init="getFavorites()">
+<h1 class=" ">{{status}}</h1>
+<div class="courselist " ng-init="getFavorites()">
 	<ul>
-		<li ng-repeat="fav in favorites" class="span12">
-				<a ng-href="#/course?id={{fav.c.value | urlFilter:'_'}}" title='{{fav.title.value}}' class="btn span8">
+		<li ng-repeat="fav in favorites" class="">
+				<a ng-href="#/course?id={{fav.c.value | urlFilter:'_'}}" title='{{fav.title.value}}' class="btn courselisttitle">
 					{{fav.c.value | urlFilter:'_'}}: {{fav.title.value}}
 				</a>
-				<div ng-click="removeFavorite(fav.c.value)" class="btn btn-danger btn-small">Remove Favorite</div>	
+				<div ng-click="removeFavorite(fav.c.value)" class="btn btn-danger btn-small coursefav">Remove Favorite</div>	
 		</li>
 	</ul>
 </div>

@@ -145,7 +145,7 @@ function CourseListControl($scope,$routeParams,$location,SparqlService,localStor
 }
 
 /* Control for the course general page with the Tweet-stuff */
-function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService) {
+function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService,localStorageService) {
     $scope.params = $routeParams;
     $scope.tweets = null;
     $scope.status = "Loading tweets ...";
@@ -174,18 +174,46 @@ function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService
   	$scope.noppa = null;
   	$scope.noppaExtra = null;
   	$scope.noppaNews = null;
+  	var haxObject = {};  //haxes for later
+	var tempObject1 = {}; var tempObject2 = {}; //wierd stuff
+	tempObject1["value"] = "http://data.aalto.fi/id/courses/noppa/course_"+$scope.params.id;
+	haxObject["c"] = tempObject1;
   	NoppaService.searchCourse($scope.params.id).then(function(data) {
-         	console.log(data);
+         	//console.log(data);
          	$scope.noppa = data;
+         	tempObject2["value"] = $scope.noppa.data.name;
+			haxObject["title"] = tempObject2;
     }); 
     NoppaService.searchCourseOverview($scope.params.id).then(function(data) {
-         	console.log(data);
+         	//console.log(data);
          	$scope.noppaExtra = data;
     });
     NoppaService.searchCourseNews($scope.params.id).then(function(data) {
-         	console.log(data);
+         	//console.log(data);
          	$scope.noppaNews = data;
     });  
+    
+    //favorites
+    $scope.addFavorite = function(object){
+		localStorageService.add(object.c.value,JSON.stringify(object));
+	}
+	$scope.isFavorite = function(object){
+		var value = localStorageService.get(object.c.value);
+		if (value != null ) {
+			//console.log(value);
+			return true;
+		}
+		return false;
+	}
+	$scope.removeFavorite = function(object){
+	   	localStorageService.remove(object.c.value);
+		//$scope.isFavorite(object);	
+	}
+	
+	//I dont wanna call the sparql just so that we can pull a whole object to maybe put in our favorites and do nothing with...
+	
+	//console.log(haxObject);
+	$scope.objectHax = haxObject;
 }
 
 /*Tamin lisays, starts*/
