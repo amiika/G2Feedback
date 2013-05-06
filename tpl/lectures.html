@@ -2,10 +2,11 @@
 <div class="span12">
 	<ul>
 		<li ng-repeat="binding in lectures.results.bindings" class="span12">
-			<a ng-href="#/lecture?id=A{{binding.l.value | urlFilter:'_'}}L" title='{{binding.sum.value}}' class="btn span12">
+			<a ng-href="#/lecture?id={{binding.c.value | urlFilter:'_'}}&lecture_id=A{{binding.l.value | urlFilter:'_'}}L" title='{{binding.sum.value}}' class="btn span12">
 				{{binding.s.value | date:'HH:mm'}}-{{binding.e.value | date:'HH:mm'}}: <br/>
 				{{binding.title.value}}
 			</a>
 		</li>    
 	</ul>
 </div>
+<!-- FOR DEBUGGING PURPOSES::: <div style="display:inline-block;">{{lectures.results}}</div>  -->

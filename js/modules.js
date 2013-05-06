@@ -51,7 +51,9 @@ services.factory('NoppaService', function($http) {
            	  },
         searchCourseNews: function(id){
            	  return $http.jsonp('http://noppa-api-dev.aalto.fi/api/v1/courses/'+id+'/news?key=cdda4ae4833c0114005de5b5c4371bb8&callback=JSON_CALLBACK')
-           	  }
+           	  },searchLectureInfo: function(id){
+              return $http.jsonp('http://noppa-api-dev.aalto.fi/api/v1/courses/'+id+'/lectures?key=cdda4ae4833c0114005de5b5c4371bb8&callback=JSON_CALLBACK')
+              }
     };
     
     return noppaService;
