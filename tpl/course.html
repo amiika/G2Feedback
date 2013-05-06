@@ -1,8 +1,8 @@
 <div class="course-wrapper">
 	<div ng-show="noppa" class="courseinfo">
-		<div class="coursetitle"><strong>{{noppa.data.course_id}} {{noppa.data.name}}</strong></div>
+		<div class="coursetitle"><strong>{{noppa.data.course_id}} {{noppa.data.name}} ({{noppaExtra.data.credits}} cr)</strong></div>
 		<a href="http://noppa.aalto.fi/noppa/kurssi/{{params.id}}" target="_blank" class="courselink">Go to Noppa Page</a> <!-- Staff: {{noppaExtra.data.staff}} -->
-		<div class="coursenews">Latest News from Noppa: <br>
+		<div ng-show="noppaNew.data[0]" class="coursenews">Latest News from Noppa: <br>
 			<i>{{noppaNews.data[0].date | date:'yyyy.MM.dd hh:mm' }}</i> <strong>{{noppaNews.data[0].title}}</strong><br>
 			{{noppaNews.data[0].content}}</div>
 	</div>
