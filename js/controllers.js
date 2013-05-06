@@ -105,11 +105,11 @@ function CourseListControl($scope,$routeParams,$location,SparqlService,localStor
     
     //Finds the course by its name.
     //TODO: Find a course by its code.
-    SparqlService.query(prefix+"SELECT ?title ?l ?c ?d WHERE { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER regex(?title ,'"+$scope.params.keywords+"','i') } ORDER BY fn:lower-case(?title)")
+    SparqlService.query(prefix+"SELECT ?title ?l ?c ?d ?code WHERE {{ ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . ?c aiiso:code ?code . FILTER regex(?title ,'"+$scope.params.keywords+"','i') } UNION { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . ?c aiiso:code ?code . FILTER regex(str(?code) ,'"+$scope.params.keywords+"','i') }} ORDER BY fn:lower-case(?title)")
        .success(function(data, status) {
            
         if(data.results.bindings.length<1) {
-            $scope.status="No courses found.";
+            $scope.status="No courses found."; //  UNION { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER regex(str(?c) ,'"+$scope.params.keywords+"','i') }
         }
         else { 
             $scope.status="Select course:";
