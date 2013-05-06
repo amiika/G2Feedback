@@ -112,6 +112,29 @@ angularLocalStorage.service('localStorageService', [
     }
     return true;
   };
+  //Get all WE HAXED THIS
+  var getAllFromLocalStorage = function () {
+
+    if (!browserSupportsLocalStorage()) {
+      $rootScope.$broadcast('LocalStorageModule.notification.warning','LOCAL_STORAGE_NOT_SUPPORTED');
+      return {};
+    }
+    var favorites = {};
+    var prefixLength = prefix.length;
+
+    for (var key in localStorage) {
+      // Only remove items that are for this app
+      if (key.substr(0,prefixLength) === prefix) {
+        try {
+          favorites[key] = getFromLocalStorage(key.substr(prefixLength));
+        } catch (e) {
+          $rootScope.$broadcast('LocalStorageModule.notification.error',e.Description);
+          return {};
+        }
+      }
+    }
+    return favorites;
+  };
 
   // Checks the browser to see if cookies are supported
   var browserSupportsCookies = function() {
@@ -201,6 +224,7 @@ angularLocalStorage.service('localStorageService', [
     get: getFromLocalStorage,
     remove: removeFromLocalStorage,
     clearAll: clearAllFromLocalStorage,
+    getAll: getAllFromLocalStorage,
     cookie: {
       add: addToCookies,
       get: getFromCookies,

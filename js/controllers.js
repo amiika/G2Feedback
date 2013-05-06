@@ -96,7 +96,7 @@ function LectureControl($scope,$routeParams,$location,TwitterService, NoppaServi
 
 /* Control for course search results page */
 //Tam: lisasin angularLocalStorage parametrina
-function CourseListControl($scope,$routeParams,$location,SparqlService) {
+function CourseListControl($scope,$routeParams,$location,SparqlService,localStorageService) {
     $scope.params = $routeParams;
     $scope.courses = null;
     $scope.status = "Loading search results ...";   
@@ -121,18 +121,13 @@ function CourseListControl($scope,$routeParams,$location,SparqlService) {
 	});
         
         /*Tamin lisays,starts*/
-       	$scope.addFavorite = function(){
-		/*var value = angularLocalStorage.getFromLocalStorage('favorites');
-		//console.log("asdf");
-		//If value is empty or null, create an empty lists of objects
-		if (!value){
-			value=[];
-		}
-		//otherwise add course-object to favorite-list
-		else{
-			angularLocalStorage.addToLocalStorage('favorites','Add this');
-		}*/
+       	$scope.addFavorite = function(object){
+		localStorageService.add(object.c.value,JSON.stringify(object));
 	}
+	$scope.isFavorite = function(id){
+		var value = localStorageService.get(id);
+	}
+	
 	/*Tamin lisays, ends*/
 }
 
@@ -181,22 +176,20 @@ function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService
 }
 
 /*Tamin lisays, starts*/
-function ShowFavoritesControl($scope){
+function ShowFavoritesControl($scope,localStorageService){
 	
-	$scope.removeFavorite = function(){
-	/*	var value = localStorageService.getFromLocalStorage('favorites');
-		//console.log("asdf");
-		alert("what");
-		//If value is empty or null, create an empty lists of objects
-		if (!value){
-			value=[];
-		}
-		//otherwise add course-object to favorite-list
-		else{
-			angularLocalStorage.addToLocalStorage('favorites','Add this');
-		}*/
+	$scope.removeFavorite = function(id){
+	   	localStorageService.remove(id);
+		$scope.getFavorites();
 	}
-	//dummy part
+	$scope.getFavorites = function(){
+		console.log("testing storgge");		
+		console.log(localStorageService.getAll());
+		$scope.favorites = localStorageService.getAll();
+		for (fav in $scope.favorites) {
+			$scope.favorites[fav] = JSON.parse($scope.favorites[fav]);	
+		}
+	}
 }
 /*Tamin lisays, ends*/
 

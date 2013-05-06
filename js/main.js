@@ -1,7 +1,7 @@
 // Angularjs SparqlService testing
 
 // Main constructor. Place to include modules and routes.
-var app = angular.module('myApp', ['filters','services'], function($routeProvider, $locationProvider) {
+var app = angular.module('myApp', ['filters','services','LocalStorageModule'], function($routeProvider, $locationProvider) {
 
 $routeProvider.when('/main', {
     templateUrl: 'tpl/main.html',

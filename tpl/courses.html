@@ -3,9 +3,9 @@
 	<ul>
 		<li ng-repeat="binding in courses.results.bindings" class="span12 btn-group">
 				<a ng-href="#/course?id={{binding.c.value | urlFilter:'_'}}" title='{{binding.title.value}}' class="btn span8">
-					{{binding.title.value}}
+					{{binding.c.value | urlFilter:'_' }}: {{binding.title.value}}
 				</a>
-				<a class="btn btn-info btn-small" ng-click="addFavorite()">Add To Favorite</a>
+				<a class="btn btn-info btn-small" ng-click="addFavorite( binding )">Add To Favorite</a>
 		</li>    
 	</ul>
 </div>

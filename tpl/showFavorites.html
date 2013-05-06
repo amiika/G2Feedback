@@ -1,14 +1,14 @@
 <h1 class="offset1 span6">{{status}}</h1>
-<div class="span12 btn-group-vertical">
+<div class="span12 btn-group-vertical" ng-init="getFavorites()">
 	<ul>
-<!--		<li ng-repeat="binding in courses.results.bindings" class="span12">
-				<a ng-href="#/course?id={{binding.c.value | urlFilter:'_'}}" title='{{binding.title.value}}' class="btn span8">
-					{{binding.title.value}}
-					<a ng-href="#jotain" class="btn btn-info btn-small">Add To Favorite</a>
-				</a>
+		<li ng-repeat="fav in favorites" class="span12">
+				<a ng-href="#/course?id={{fav.c.value | urlFilter:'_'}}" title='{{fav.title.value}}' class="btn span8">
+					{{fav.c.value | urlFilter:'_'}}: {{fav.title.value}}
+					
+				</a><div ng-click="removeFavorite(fav.c.value)" class="btn btn-info btn-small">Remove Favorite</div>
 				
 		</li>
-		-->
+		<!--
 		
 		<li class="span12 btn-group ">
 			<a class="btn" >favorite1</a>
@@ -17,6 +17,6 @@
 		<li class="span12 btn-group">
 			<a class="btn" >favorite2</a>
 			<a class="btn btn-info btn-small" ng-click="removeFavorite()">Remove From Favorite</a>
-		</li>        
+		</li>  -->      
 	</ul>
 </div>
