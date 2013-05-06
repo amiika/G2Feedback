@@ -177,18 +177,26 @@ function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService
 
 /*Tamin lisays, starts*/
 function ShowFavoritesControl($scope,localStorageService){
-	
+	$scope.status = "No favorite courses";
 	$scope.removeFavorite = function(id){
 	   	localStorageService.remove(id);
 		$scope.getFavorites();
+		for (fav in $scope.favorites) {
+			return;
+		}
+		$scope.status = "No favorite courses";
+		
 	}
 	$scope.getFavorites = function(){
 		console.log("testing storgge");		
 		console.log(localStorageService.getAll());
 		$scope.favorites = localStorageService.getAll();
+		//console.log($scope.favorites);
 		for (fav in $scope.favorites) {
-			$scope.favorites[fav] = JSON.parse($scope.favorites[fav]);	
+			$scope.favorites[fav] = JSON.parse($scope.favorites[fav]);
+			$scope.status = "";
 		}
+		
 	}
 }
 /*Tamin lisays, ends*/
