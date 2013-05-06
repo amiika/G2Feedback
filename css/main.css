@@ -2,7 +2,7 @@
         
 /* Top Padding for responsive navbar-top-fixed */
 body { 
-		padding-top: 60px;
+		/*padding-top: 60px;*/
 		padding-bottom: 40px;
 }
 @media (max-width: 979px) {
@@ -51,6 +51,25 @@ li {
 ul {
 	margin:0;
 }
+.uppernav {
+	padding: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color:#eeeeee;
+  	border-radius:5px;
+  	border:1px groove #cccccc;
+}
+.uppernav .title {
+	padding: 5px;
+	font-size: 130%;
+	font-weight: bold;
+	color: #3355aa;
+	vertical-align: middle;
+}
+.uppernav .title:hover {
+	color: #3355aa;
+}
+
 
 #tweetlist {
   padding:5px;
