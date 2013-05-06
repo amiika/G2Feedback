@@ -1,15 +1,19 @@
 var prefix = "prefix teach:<http://linkedscience.org/teach/ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix aiiso:<http://purl.org/vocab/aiiso/schema#> prefix ical: <http://www.w3.org/2002/12/cal/icaltzd#> prefix xsd: <http://www.w3.org/2001/XMLSchema#> prefix fn:  <http://www.w3.org/2005/xpath-functions#>";
 
 /* Control for main page */
-function MainControl($scope, $routeParams) {
+//Tam:lisasin localStorageService parametriksi
+function MainControl($scope, $routeParams, localStorageService) {
   $scope.name = "MainControl";
-  $scope.params = $routeParams;
-  
+  $scope.params = $routeParams; 
   //the search box redirection (wierd bug workaround)
   $scope.search = function() {
   	//console.log($scope.keywords);
   	window.location = "#/courses?keywords="+$scope.keywords;
   }
+  
+  //Tamin lisays, starts
+  $scope.favSize = Object.keys(localStorageService.getAll()).length; //suosikkien lukumaara
+  //Tamin lisays, ends
 }
 
 /* Control for Schools-page */
@@ -200,7 +204,9 @@ function ShowFavoritesControl($scope,localStorageService){
 		console.log("testing storgge");		
 		console.log(localStorageService.getAll());
 		$scope.favorites = localStorageService.getAll();
-		//console.log($scope.favorites);
+		//console.log("Tam tutkii");
+		//console.log(Object.keys($scope.favorites).length);
+		//console.log("Tam tutkii");
 		for (fav in $scope.favorites) {
 			$scope.favorites[fav] = JSON.parse($scope.favorites[fav]);
 			$scope.status = "";
