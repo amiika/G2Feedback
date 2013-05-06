@@ -63,6 +63,7 @@ function LectureControl($scope,$routeParams,$location,TwitterService) {
 }
 
 /* Control for course search results page */
+//Tam: lisasin angularLocalStorage parametrina
 function CourseListControl($scope,$routeParams,$location,SparqlService) {
     $scope.params = $routeParams;
     $scope.courses = null;
@@ -85,6 +86,21 @@ function CourseListControl($scope,$routeParams,$location,SparqlService) {
             console.log(data);
         }
         });
+        
+        /*Tamin lisays,starts*/
+       	$scope.addFavorite = function(){
+		/*var value = angularLocalStorage.getFromLocalStorage('favorites');
+		//console.log("asdf");
+		//If value is empty or null, create an empty lists of objects
+		if (!value){
+			value=[];
+		}
+		//otherwise add course-object to favorite-list
+		else{
+			angularLocalStorage.addToLocalStorage('favorites','Add this');
+		}*/
+	}
+	/*Tamin lisays, ends*/
 }
 
 /* Control for the course general page with the Tweet-stuff */
@@ -133,6 +149,20 @@ function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService
 
 /*Tamin lisays, starts*/
 function ShowFavoritesControl($scope){
+	
+	$scope.removeFavorite = function(){
+	/*	var value = localStorageService.getFromLocalStorage('favorites');
+		//console.log("asdf");
+		alert("what");
+		//If value is empty or null, create an empty lists of objects
+		if (!value){
+			value=[];
+		}
+		//otherwise add course-object to favorite-list
+		else{
+			angularLocalStorage.addToLocalStorage('favorites','Add this');
+		}*/
+	}
 	//dummy part
 }
 /*Tamin lisays, ends*/
