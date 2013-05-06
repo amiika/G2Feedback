@@ -1,11 +1,11 @@
 <h1 class="offset1 span6">{{status}}</h1>
 <div class="span12">
 	<ul>
-		<li ng-repeat="binding in courses.results.bindings" class="span12 btn-group">
+		<li ng-repeat="binding in courses.results.bindings" class="span12">
 				<a ng-href="#/course?id={{binding.c.value | urlFilter:'_'}}" title='{{binding.title.value}}' class="btn span8">
 					{{binding.c.value | urlFilter:'_' }}: {{binding.title.value}}
 				</a>
-				<a class="btn btn-info btn-small" ng-click="addFavorite( binding )">Add To Favorite</a>
+				<div class="btn btn-info btn-small" ng-click="addFavorite( binding )">Add To Favorite</div>
 		</li>    
 	</ul>
 </div>
