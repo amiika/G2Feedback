@@ -2,9 +2,16 @@
 	<div ng-show="noppa" class="courseinfo">
 		<div class="coursetitle"><strong>{{noppa.data.course_id}} {{noppa.data.name}}</strong></div>
 		 <!-- Staff: {{noppaExtra.data.staff}} -->
-		<div class="coursenews">Latest News from<a href="http://noppa.aalto.fi/noppa/kurssi/{{params.id}}" target="_blank" class="courselink">Noppa</a>: <br>
-			<i>{{noppaNews.data[0].date}}</i> <strong>{{noppaNews.data[0].title}}</strong><br>
-			{{noppaNews.data[0].content}}</div>
+		<div><a href="#/course/?id={{params.id}}" class="courselink">Go to course page</a></div>		
+		<div><a href="http://noppa.aalto.fi/noppa/kurssi/{{params.id}}" target="_blank" class="courselink">Course in Noppa</a></div>
+		<div class="lectureinfo">
+		Lecture date: {{noppaLectureInfo.date}}<br>
+		Time: {{noppaLectureInfo.start_time}} - {{noppaLectureInfo.end_time}}<br>
+		Location: {{noppaLectureInfo.location}}<br>
+		Title: {{noppaLectureInfo.title}}<br>
+		Content: {{noppaLectureInfo.content}}<br>
+		Materials: {{noppaLectureInfo.materials}}<br>
+		</div>
 	</div>
 
 	<div id="custom-tweet-button">
@@ -18,3 +25,5 @@
 		</ul>
 	</div>
 </div>
+
+<div style="display:inline-block;">Test<br>{{noppaLectureInfo}}</div>

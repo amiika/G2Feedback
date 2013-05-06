@@ -68,6 +68,7 @@ function LectureControl($scope,$routeParams,$location,TwitterService, NoppaServi
 	$scope.noppa = null;
 	$scope.noppaExtra = null;
 	$scope.noppaNews = null;
+	$scope.noppaLectureInfo = null;
 	NoppaService.searchCourse($scope.params.id).then(function(data) {
 	 	console.log(data);
 	 	$scope.noppa = data;
@@ -79,7 +80,18 @@ function LectureControl($scope,$routeParams,$location,TwitterService, NoppaServi
 	NoppaService.searchCourseNews($scope.params.id).then(function(data) {
 	 	console.log(data);
 	 	$scope.noppaNews = data;
-	});  
+	});
+	NoppaService.searchLectureInfo($scope.params.id).then(function(results) {
+	 	console.log(results);
+		for (lecture in results.data) {
+
+			if ("A"+results.data[lecture].lecture_id+"L" == $scope.params.lecture_id) {		
+				$scope.noppaLectureInfo = results.data[lecture];
+			}
+		}
+	 	
+	});
+ 	
 
 }
 
