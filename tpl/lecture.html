@@ -9,8 +9,8 @@
 		Time: {{noppaLectureInfo.start_time}} - {{noppaLectureInfo.end_time}}<br>
 		Location: {{noppaLectureInfo.location}}<br>
 		Title: {{noppaLectureInfo.title}}<br>
-		Content: {{noppaLectureInfo.content}}<br>
-		Materials for this lecture (links are from the noppa dev api and won't work): <ul><li ng-repeat="material in noppaLectureInfo.materials"><a href ='{{material.url}}'>{{material.title}}</a></li></ul>
+		<div ng-show="noppaLectureInfo.content">Content: {{noppaLectureInfo.content}}<br></div>
+		<div ng-show="noppaLectureInfo.materials">Materials for this lecture (links are from the noppa dev api and won't work): <ul><li ng-repeat="material in noppaLectureInfo.materials"><a href ='{{material.url}}'>{{material.title}}</a></li></ul></div>
 		</div>
 	</div>
 
