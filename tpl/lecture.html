@@ -1,10 +1,20 @@
-<div id="custom-tweet-button">
-  <a ng-href="https://twitter.com/intent/tweet?hashtags={{hash}}" target="_blank">Send some tweetback for this lecture.</a>
-</div>
+<div class="course-wrapper">
+	<div ng-show="noppa" class="courseinfo">
+		<div class="coursetitle"><strong>{{noppa.data.course_id}} {{noppa.data.name}}</strong></div>
+		 <!-- Staff: {{noppaExtra.data.staff}} -->
+		<div class="coursenews">Latest News from<a href="http://noppa.aalto.fi/noppa/kurssi/{{params.id}}" target="_blank" class="courselink">Noppa</a>: <br>
+			<i>{{noppaNews.data[0].date}}</i> <strong>{{noppaNews.data[0].title}}</strong><br>
+			{{noppaNews.data[0].content}}</div>
+	</div>
 
-<div>
-	<h3 ng-show="tweets.data">Tweets</h3>
-	<ul id="tweetlist">
-		<li ng-repeat='result in tweets.data.results'>{{result.text}}</li>
-	</ul>
+	<div id="custom-tweet-button">
+	  <a ng-href="https://twitter.com/intent/tweet?hashtags={{hash}}" target="_blank">Send some tweetback for this lecture.</a>
+	</div>
+
+	<div>
+		<h3 ng-show="tweets.data">Tweets</h3>
+		<ul id="tweetlist">
+			<li ng-repeat='result in tweets.data.results'>{{result.text}}</li>
+		</ul>
+	</div>
 </div>

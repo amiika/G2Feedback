@@ -26,7 +26,7 @@ function LectureListControl($scope,$routeParams,$location,SparqlService) {
     $scope.status = "Loading lectures ...";   
     console.log($scope.params);
     
-    SparqlService.query(prefix+"SELECT ?title ?l ?s ?e ?sum WHERE { ?d aiiso:part_of <"+$scope.params.id+"> . ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER(lang(?title)='en') ?c teach:arrangedAt ?l . ?l ical:dtstart ?s . ?l ical:dtend ?e . ?l ical:summary ?sum . BIND(xsd:int(substr(str(now()),12,2)) as ?now) BIND((xsd:int(substr(str(?s),12,2))) as ?snow) BIND(substr(str(now()),1,10) as ?today) BIND(substr(str(?s),1,10) as ?lday) FILTER(?today=?lday)} ORDER BY ?snow")
+    SparqlService.query(prefix+"SELECT ?title ?c ?l ?s ?e ?sum WHERE { ?d aiiso:part_of <"+$scope.params.id+"> . ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER(lang(?title)='en') ?c teach:arrangedAt ?l . ?l ical:dtstart ?s . ?l ical:dtend ?e . ?l ical:summary ?sum . BIND(xsd:int(substr(str(now()),12,2)) as ?now) BIND((xsd:int(substr(str(?s),12,2))) as ?snow) BIND(substr(str(now()),1,10) as ?today) BIND(substr(str(?s),1,10) as ?lday) FILTER(?today=?lday)} ORDER BY ?snow")
        .success(function(data, status) {
            
         if(data.results.bindings.length<1) {
@@ -41,17 +41,20 @@ function LectureListControl($scope,$routeParams,$location,SparqlService) {
 }
 
 /* Control for Tweet-page */
-function LectureControl($scope,$routeParams,$location,TwitterService) {
+function LectureControl($scope,$routeParams,$location,TwitterService, NoppaService) {
     $scope.params = $routeParams;
     $scope.tweets = null;
     $scope.status = "Loading tweets ...";
-    $scope.hash = encodeURIComponent($scope.params.id);
+    var temp = $scope.params.id;
+    temp = temp.replace(".","");
+    temp = temp.replace("-","");
+    $scope.hash = encodeURIComponent($scope.params.lecture_id) + ", " + encodeURIComponent("Aalto"+temp);
 
 	//TODO: SPARQL that gets Lecture&course data? for more information about the lecture.
 
 // Uses TwitterService to get tweets from twitter
  $scope.getTweets = function() {
-     TwitterService.search($scope.params.id).then(function(data) {
+     TwitterService.search($scope.params.lecture_id).then(function(data) {
          console.log(data);
          $scope.tweets = data;
      });   
@@ -59,6 +62,24 @@ function LectureControl($scope,$routeParams,$location,TwitterService) {
 
 // Get tweets always when page and this controller is loaded.
   $scope.getTweets();
+
+	// I just copied below snippet from CourseControl
+	//call noppa for information
+	$scope.noppa = null;
+	$scope.noppaExtra = null;
+	$scope.noppaNews = null;
+	NoppaService.searchCourse($scope.params.id).then(function(data) {
+	 	console.log(data);
+	 	$scope.noppa = data;
+	}); 
+	NoppaService.searchCourseOverview($scope.params.id).then(function(data) {
+	 	console.log(data);
+	 	$scope.noppaExtra = data;
+	});
+	NoppaService.searchCourseNews($scope.params.id).then(function(data) {
+	 	console.log(data);
+	 	$scope.noppaNews = data;
+	});  
 
 }
 
