@@ -5,7 +5,8 @@
 				<a ng-href="#/course?id={{binding.c.value | urlFilter:'_'}}" title='{{binding.title.value}}' class="btn span8">
 					{{binding.c.value | urlFilter:'_' }}: {{binding.title.value}}
 				</a>
-				<div class="btn btn-info btn-small" ng-click="addFavorite( binding )">Add To Favorite</div>
+				<div ng-hide="isFavorite(binding)" class="btn btn-info btn-small" ng-click="addFavorite( binding )">Add To Favorite</div>
+				<div ng-show="isFavorite(binding)" ng-click="removeFavorite(binding)" class="btn btn-danger btn-small">Remove Favorite</div>
 		</li>    
 	</ul>
 </div>

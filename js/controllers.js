@@ -100,7 +100,7 @@ function CourseListControl($scope,$routeParams,$location,SparqlService,localStor
     $scope.params = $routeParams;
     $scope.courses = null;
     $scope.status = "Loading search results ...";   
-    console.log($scope.params);
+    //console.log($scope.params);
     
     
     //Finds the course by its name.
@@ -114,18 +114,27 @@ function CourseListControl($scope,$routeParams,$location,SparqlService,localStor
         else { 
             $scope.status="Select course:";
             $scope.courses = data;
-            console.log(data);
+            //console.log(data);
         }
         }).error(function(data, status) {
 	   $scope.status="Oops! Something went wrong!";
 	});
         
-        /*Tamin lisays,starts*/
-       	$scope.addFavorite = function(object){
+    /*Tamin lisays,starts*/
+    $scope.addFavorite = function(object){
 		localStorageService.add(object.c.value,JSON.stringify(object));
 	}
-	$scope.isFavorite = function(id){
-		var value = localStorageService.get(id);
+	$scope.isFavorite = function(object){
+		var value = localStorageService.get(object.c.value);
+		if (value != null ) {
+			//console.log(value);
+			return true;
+		}
+		return false;
+	}
+	$scope.removeFavorite = function(object){
+	   	localStorageService.remove(object.c.value);
+		//$scope.isFavorite(object);	
 	}
 	
 	/*Tamin lisays, ends*/
