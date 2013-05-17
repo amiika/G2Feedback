@@ -1,5 +1,3 @@
-// Angularjs SparqlService testing
-
 // Main constructor. Place to include modules and routes.
 var app = angular.module('myApp', ['filters','services','LocalStorageModule'], function($routeProvider, $locationProvider) {
 

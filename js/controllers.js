@@ -4,12 +4,12 @@ var prefix = "prefix teach:<http://linkedscience.org/teach/ns#> prefix foaf: <ht
 function MainControl($scope, $routeParams, localStorageService) {
   $scope.name = "MainControl";
   $scope.params = $routeParams; 
-  //the search box redirection (wierd bug workaround)
+  //the search box redirection (weird bug workaround)
   $scope.search = function() {
   	window.location = "#/courses?keywords="+$scope.keywords;
   }
   
-  // Count how many courses are in favorite list. Have to do this primitive way so IE also works.
+  // Count how many courses are in favorite list. Had to do this in a primitive way in order to make it work in IE too.
   $scope.favSize=0;
   var favCourses = localStorageService.getAll();
   for(k in favCourses){
@@ -21,7 +21,8 @@ function MainControl($scope, $routeParams, localStorageService) {
 /* Control for Schools-page */
 function SchoolControl($scope,SparqlService) {
     $scope.schools = null;
-      SparqlService.query(prefix+"SELECT ?org ?name WHERE { ?d aiiso:part_of ?org . ?org foaf:name ?name . FILTER(lang(?name)='en') ?d aiiso:teaches ?c . ?c teach:arrangedAt ?l . } GROUP BY ?org ?name ORDER BY asc(?name)")
+    // SPARQL-query for finding the schools that arrange courses
+    SparqlService.query(prefix+"SELECT ?org ?name WHERE { ?d aiiso:part_of ?org . ?org foaf:name ?name . FILTER(lang(?name)='en') ?d aiiso:teaches ?c . ?c teach:arrangedAt ?l . } GROUP BY ?org ?name ORDER BY asc(?name)")
        .success(function(data, status) {$scope.schools = data});
 }
 
@@ -29,9 +30,9 @@ function SchoolControl($scope,SparqlService) {
 function LectureListControl($scope,$routeParams,$location,SparqlService) {
     $scope.params = $routeParams;
     $scope.lectures = null;
-    $scope.status = "Loading lectures ...";   
-    console.log($scope.params);
+    $scope.status = "Loading lectures ...";
     
+    // SPARQL-query for finding today's lectures
     SparqlService.query(prefix+"SELECT ?title ?c ?l ?s ?e ?sum WHERE { ?d aiiso:part_of <"+$scope.params.id+"> . ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER(lang(?title)='en') ?c teach:arrangedAt ?l . ?l ical:dtstart ?s . ?l ical:dtend ?e . ?l ical:summary ?sum . BIND(xsd:int(substr(str(now()),12,2)) as ?now) BIND((xsd:int(substr(str(?s),12,2))) as ?snow) BIND(substr(str(now()),1,10) as ?today) BIND(substr(str(?s),1,10) as ?lday) FILTER(?today=?lday)} ORDER BY ?snow")
        .success(function(data, status) {
            
@@ -46,22 +47,19 @@ function LectureListControl($scope,$routeParams,$location,SparqlService) {
         });
 }
 
-/* Control for Tweet-page */
+/* Control for Lecture-page */
 function LectureControl($scope,$routeParams,$location,TwitterService, NoppaService) {
     $scope.params = $routeParams;
     $scope.tweets = null;
     $scope.status = "Loading tweets ...";
-    var temp = $scope.params.id;
-    temp = temp.replace(".","");
+    var temp = $scope.params.id; // get course code from the parameters 
+    temp = temp.replace(".",""); // replace '.' and'-. with '' because of limitations in the Twitter API
     temp = temp.replace("-","");
-    $scope.hash = encodeURIComponent($scope.params.lecture_id) + ", " + encodeURIComponent("Aalto"+temp);
-
-	//TODO: SPARQL that gets Lecture&course data? for more information about the lecture.
+    $scope.hash = encodeURIComponent($scope.params.lecture_id) + ", " + encodeURIComponent("Aalto"+temp); // hashtags for the lecture
 
 // Uses TwitterService to get tweets from twitter
  $scope.getTweets = function() {
      TwitterService.search($scope.params.lecture_id).then(function(data) {
-         console.log(data);
          $scope.tweets = data;
      });   
     }
@@ -69,26 +67,22 @@ function LectureControl($scope,$routeParams,$location,TwitterService, NoppaServi
 // Get tweets always when page and this controller is loaded.
   $scope.getTweets();
 
-	// I just copied below snippet from CourseControl
-	//call noppa for information
+	//call noppa for more information
 	$scope.noppa = null;
 	$scope.noppaExtra = null;
 	$scope.noppaNews = null;
 	$scope.noppaLectureInfo = null;
+    // due to limitations in the NOPPA API we will have to do 4 different queries in order to get all the relevant information
 	NoppaService.searchCourse($scope.params.id).then(function(data) {
-	 	console.log(data);
 	 	$scope.noppa = data;
 	}); 
 	NoppaService.searchCourseOverview($scope.params.id).then(function(data) {
-	 	console.log(data);
 	 	$scope.noppaExtra = data;
 	});
 	NoppaService.searchCourseNews($scope.params.id).then(function(data) {
-	 	console.log(data);
 	 	$scope.noppaNews = data;
 	});
 	NoppaService.searchLectureInfo($scope.params.id).then(function(results) {
-	 	console.log(results);
 		for (lecture in results.data) {
 
 			if ("A"+results.data[lecture].lecture_id+"L" == $scope.params.lecture_id) {		
@@ -96,54 +90,45 @@ function LectureControl($scope,$routeParams,$location,TwitterService, NoppaServi
 			}
 		}
 	});
- 	
-
 }
 
 /* Control for course search results page */
-//Tam: lisasin angularLocalStorage parametrina
 function CourseListControl($scope,$routeParams,$location,SparqlService,localStorageService) {
     $scope.params = $routeParams;
     $scope.courses = null;
     $scope.status = "Loading search results ...";   
-    //console.log($scope.params);
-    
-    
-    //Finds the course by its name.
-    //TODO: Find a course by its code.
+  
+    //Finds the course by its name or course code.
     SparqlService.query(prefix+"SELECT ?title ?l ?c ?d ?code WHERE {{ ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . ?c aiiso:code ?code . FILTER regex(?title ,'"+$scope.params.keywords+"','i') } UNION { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . ?c aiiso:code ?code . FILTER regex(str(?code) ,'"+$scope.params.keywords+"','i') }} ORDER BY fn:lower-case(?title)")
        .success(function(data, status) {
            
         if(data.results.bindings.length<1) {
-            $scope.status="No courses found."; //  UNION { ?d aiiso:teaches ?c . ?c teach:courseTitle ?title . FILTER regex(str(?c) ,'"+$scope.params.keywords+"','i') }
+            $scope.status="No courses found.";
         }
         else { 
             $scope.status="Select course:";
             $scope.courses = data;
-            //console.log(data);
         }
         }).error(function(data, status) {
 	   $scope.status="Oops! Something went wrong!";
 	});
-        
-    /*Tamin lisays,starts*/
+    
+    // adds course to favorites
     $scope.addFavorite = function(object){
 		localStorageService.add(object.c.value,JSON.stringify(object));
 	}
+    // determines whether course is already in favorites
 	$scope.isFavorite = function(object){
 		var value = localStorageService.get(object.c.value);
 		if (value != null ) {
-			//console.log(value);
 			return true;
 		}
 		return false;
 	}
+    // removes course from favorites
 	$scope.removeFavorite = function(object){
-	   	localStorageService.remove(object.c.value);
-		//$scope.isFavorite(object);	
+	   	localStorageService.remove(object.c.value);	
 	}
-	
-	/*Tamin lisays, ends*/
 }
 
 /* Control for the course general page with the Tweet-stuff */
@@ -152,18 +137,15 @@ function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService
     $scope.tweets = null;
     $scope.status = "Loading tweets ...";
     
-
 	// Uses TwitterService to get tweets from twitter
  	//filter punctuation out of it.
- 	console.log($scope.params.id);
     var temp = $scope.params.id;
     temp = temp.replace(".","");
     temp = temp.replace("-","");
-    $scope.hash = encodeURIComponent("Aalto"+temp);
+    $scope.hash = encodeURIComponent("Aalto"+temp); // course hashtag
+    
  	$scope.getTweets = function() {
-     	console.log($scope.hash);
      	TwitterService.search($scope.hash).then(function(data) {
-         	console.log(data);
          	$scope.tweets = data;
      	});   
     }
@@ -177,21 +159,18 @@ function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService
   	$scope.noppaExtra = null;
   	$scope.noppaNews = null;
   	var haxObject = {};  //haxes for later
-	var tempObject1 = {}; var tempObject2 = {}; //wierd stuff
+	var tempObject1 = {}; var tempObject2 = {}; //weird stuff
 	tempObject1["value"] = "http://data.aalto.fi/id/courses/noppa/course_"+$scope.params.id;
 	haxObject["c"] = tempObject1;
   	NoppaService.searchCourse($scope.params.id).then(function(data) {
-         	//console.log(data);
          	$scope.noppa = data;
          	tempObject2["value"] = $scope.noppa.data.name;
 			haxObject["title"] = tempObject2;
     }); 
     NoppaService.searchCourseOverview($scope.params.id).then(function(data) {
-         	//console.log(data);
          	$scope.noppaExtra = data;
     });
     NoppaService.searchCourseNews($scope.params.id).then(function(data) {
-         	//console.log(data);
          	$scope.noppaNews = data;
     });  
     
@@ -202,23 +181,20 @@ function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService
 	$scope.isFavorite = function(object){
 		var value = localStorageService.get(object.c.value);
 		if (value != null ) {
-			//console.log(value);
 			return true;
 		}
 		return false;
 	}
 	$scope.removeFavorite = function(object){
-	   	localStorageService.remove(object.c.value);
-		//$scope.isFavorite(object);	
+	   	localStorageService.remove(object.c.value);	
 	}
 	
 	//I dont wanna call the sparql just so that we can pull a whole object to maybe put in our favorites and do nothing with...
 	
-	//console.log(haxObject);
 	$scope.objectHax = haxObject;
 }
 
-/*Tamin lisays, starts*/
+/* Control for favorites-page */
 function ShowFavoritesControl($scope,localStorageService){
 	$scope.status = "No favorite courses";
 	$scope.removeFavorite = function(id){
@@ -243,16 +219,4 @@ function ShowFavoritesControl($scope,localStorageService){
 		}
 		
 	}
-}
-/*Tamin lisays, ends*/
-
-// This is old test. SHOULD BE REMOVED?
-function Tweet($scope,TwitterService){
- $scope.id = null;
- $scope.data = null;
- $scope.getTweets = function() {
-     TwitterService.search($scope.id).then(function(data) {
-         $scope.data = data;
-     });   
-}
 }
