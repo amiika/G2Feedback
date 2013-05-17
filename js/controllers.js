@@ -197,22 +197,19 @@ function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService
 /* Control for favorites-page */
 function ShowFavoritesControl($scope,localStorageService){
 	$scope.status = "No favorite courses";
+    // removing course from favorites
 	$scope.removeFavorite = function(id){
 	   	localStorageService.remove(id);
 		$scope.getFavorites();
 		for (fav in $scope.favorites) {
 			return;
 		}
-		$scope.status = "No favorite courses";
+		$scope.status = "No favorite courses"; // if no favorite courses, change status text
 		
 	}
+    // function for getting the favorites from the localstorage
 	$scope.getFavorites = function(){
-		console.log("testing storgge");		
-		console.log(localStorageService.getAll());
 		$scope.favorites = localStorageService.getAll();
-		//console.log("Tam tutkii");
-		//console.log(Object.keys($scope.favorites).length);
-		//console.log("Tam tutkii");
 		for (fav in $scope.favorites) {
 			$scope.favorites[fav] = JSON.parse($scope.favorites[fav]);
 			$scope.status = "";
