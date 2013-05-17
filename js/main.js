@@ -33,12 +33,10 @@ $routeProvider.when('/course', {
     controller: 'CourseControl'
 });
 
-/*Tamin lisay, starts*/
 $routeProvider.when('/showFavorites', {
     templateUrl: 'tpl/showFavorites.html',
     controller: 'ShowFavoritesControl'
 });
-/*Tamin lisay, ends*/
   
 $routeProvider.otherwise({redirectTo:'/main'});
 
