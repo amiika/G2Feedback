@@ -158,13 +158,13 @@ function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService
   	$scope.noppa = null;
   	$scope.noppaExtra = null;
   	$scope.noppaNews = null;
-  	var haxObject = {};  //haxes for later
-	var tempObject1 = {}; var tempObject2 = {}; //weird stuff
-	tempObject1["value"] = "http://data.aalto.fi/id/courses/noppa/course_"+$scope.params.id;
+  	var haxObject = {};  //haxes (later there is an explanation)
+	var tempObject1 = {}; var tempObject2 = {}; //temps for the hax
+	tempObject1["value"] = "http://data.aalto.fi/id/courses/noppa/course_"+$scope.params.id; //hax for the course code that is the same format as from data.aalto.fi
 	haxObject["c"] = tempObject1;
   	NoppaService.searchCourse($scope.params.id).then(function(data) {
          	$scope.noppa = data;
-         	tempObject2["value"] = $scope.noppa.data.name;
+         	tempObject2["value"] = $scope.noppa.data.name;	//name of the course for saving it in the favorites
 			haxObject["title"] = tempObject2;
     }); 
     NoppaService.searchCourseOverview($scope.params.id).then(function(data) {
@@ -189,7 +189,15 @@ function CourseControl($scope,$routeParams,$location,TwitterService,NoppaService
 	   	localStorageService.remove(object.c.value);	
 	}
 	
-	//I dont wanna call the sparql just so that we can pull a whole object to maybe put in our favorites and do nothing with...
+	/*
+	 * So we have to determine if the course is in the favorites or not.
+	 * Basically, the function to store in the local storage uses the response from sparql to store a course object.
+	 * The unique identifier of the course is the data.aalto.fi identifier for the course.
+	 * Now, I dont wanna call the sparql in the course page just so that we can pull a whole object to maybe put in our favorites and do nothing with it...
+	 * So, I kind of hax it, by creating the url identifier (this isn't that serious, because in the case the identifier changes in data.aalto.fi, 
+	 * then either way it wouldn't be able to recognize the old identifier of the course) and creating a similar object with just the needed data, pulled from the noppa api calls we make anyways.
+	 * Now with this object, we can do the same isFavorite call in the template to determine if it is in our favorites.
+	 */
 	
 	$scope.objectHax = haxObject;
 }
